@@ -20,31 +20,18 @@ pub fn switch_space_no_shortcuts(space_number: u8) -> Result<(), String> {
             tell process "Dock"
                 set clicked to false
 
-                -- Strategy 1: Match by description or name (e.g., "Desktop 2", "Space 2")
+                -- Strategy 1: Click by 1-based UI element index in standard Spaces bar
                 try
-                    tell list 1 of group 2 of group 1 of group 1
-                        set matchedItems to (every UI element whose description contains "{target_space}" or name contains "{target_space}")
-                        if (count of matchedItems) > 0 then
-                            click item 1 of matchedItems
-                            set clicked to true
-                        end if
-                    end tell
+                    click UI element {target_space} of list 1 of group 2 of group 1 of group 1
+                    set clicked to true
+                on error
+                    try
+                        click button 1 of UI element {target_space} of list 1 of group 2 of group 1 of group 1
+                        set clicked to true
+                    end try
                 end try
 
-                -- Strategy 2: Click by UI element index in standard Spaces bar
-                if not clicked then
-                    try
-                        click UI element {target_space} of list 1 of group 2 of group 1 of group 1
-                        set clicked to true
-                    on error
-                        try
-                            click button 1 of UI element {target_space} of list 1 of group 2 of group 1 of group 1
-                            set clicked to true
-                        end try
-                    end try
-                end if
-
-                -- Strategy 3: Click button directly by index
+                -- Strategy 2: Click button directly by 1-based index in standard Spaces bar
                 if not clicked then
                     try
                         click button {target_space} of list 1 of group 2 of group 1 of group 1
@@ -52,15 +39,20 @@ pub fn switch_space_no_shortcuts(space_number: u8) -> Result<(), String> {
                     end try
                 end if
 
-                -- Strategy 4: Fallback for alternate hierarchy (group 1 of group 1)
+                -- Strategy 3: Fallback for alternate hierarchy (group 1 of group 1)
                 if not clicked then
                     try
                         click UI element {target_space} of list 1 of group 1 of group 1
                         set clicked to true
                     on error
                         try
-                            click button {target_space} of list 1 of group 1 of group 1
+                            click button 1 of UI element {target_space} of list 1 of group 1 of group 1
                             set clicked to true
+                        on error
+                            try
+                                click button {target_space} of list 1 of group 1 of group 1
+                                set clicked to true
+                            end try
                         end try
                     end try
                 end if
@@ -68,7 +60,7 @@ pub fn switch_space_no_shortcuts(space_number: u8) -> Result<(), String> {
                 -- If all strategies failed, press Escape to close Mission Control
                 if not clicked then
                     key code 53 -- Escape
-                    error "Could not switch to desktop space " & {target_space}
+                    error "Could not switch to desktop space at index " & {target_space}
                 end if
             end tell
         end tell
