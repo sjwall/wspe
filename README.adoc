@@ -1,0 +1,45 @@
+= wspe
+:toc:
+:toc-placement!:
+:icons: font
+:source-highlighter: highlight.js
+
+image::assets/icon.svg[wspe,128,128,align=center]
+
+`wspe` is a lightweight macOS workspace/spaces manager and global hotkey daemon written in Rust. It enables rapid, direct switching between macOS Desktop Spaces using `Cmd + <digit>` shortcuts without needing manual system shortcut configuration for each space.
+
+toc::[]
+
+== Usage
+
+=== Default Keybindings
+
+[cols="1,1,2", options="header"]
+|===
+| Shortcut | Target Space | Notes
+| `Cmd + 1` | Desktop 1 | Switches to Desktop Space 1
+| `Cmd + 2` | Desktop 2 | Switches to Desktop Space 2
+| `Cmd + 3` | Desktop 3 | Switches to Desktop Space 3
+| `Cmd + 4` | Desktop 4 | Switches to Desktop Space 4
+| `Cmd + 5` | Desktop 5 | Switches to Desktop Space 5
+| `Cmd + 6` | Desktop 6 | Switches to Desktop Space 6
+| `Cmd + 7` | Desktop 7 | Switches to Desktop Space 7
+| `Cmd + 8` | Desktop 8 | Switches to Desktop Space 8
+| `Cmd + 9` | Desktop 9 | Switches to Desktop Space 9
+| `Cmd + 0` | Desktop 10 | Maps digit `0` to Desktop Space 10
+|===
+
+NOTE: The action triggers upon the *release* (`HotKeyState::Released`) of the key combination.
+
+=== Troubleshooting
+
+* *Error: `AppleScript execution failed: ... not allowed assistive access`*:
+  Ensure that your terminal or the `wspe` process has been granted access under *System Settings -> Privacy & Security -> Accessibility*.
+* *Target space does not exist*:
+  If you press `Cmd + 4` but only have 3 desktop spaces created, Mission Control will open and close without switching (or emit an error to `/tmp/wspe.log`). Add spaces via Mission Control before switching to them.
+* *Conflicting Shortcuts*:
+  If other applications intercept `Cmd + <digit>` at a higher priority or system level, ensure there are no overriding hotkeys defined in macOS *Keyboard Shortcuts*.
+
+== License
+
+This project is licensed under the GNU General Public License v3.0 - see the link:LICENSE[LICENSE] file for details.
