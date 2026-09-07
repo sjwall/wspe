@@ -10,6 +10,45 @@ image::assets/icon.svg[wspe,128,128,align=center]
 
 toc::[]
 
+== Installation
+
+=== 1. Build the Binary
+
+Ensure the release binary is compiled before installing:
+
+[source,bash]
+----
+cargo build --release
+----
+
+=== 2. Install and Register for System Startup
+
+Run the provided install script. It copies the pre-built binary to `~/.local/bin/wspe` (or a custom directory specified via `--bin-dir`) and registers it as a macOS LaunchAgent (`uk.co.samuelwall.wspe`) so it automatically starts on system login:
+
+[source,bash]
+----
+./install.sh
+----
+
+Options supported by `install.sh`:
+
+* `--bin-dir <DIR>`: Custom install directory (default: `$HOME/.local/bin`).
+* `--in-place`: Run the binary directly from `target/release/wspe` without copying.
+* `--binary <PATH>`: Specify an alternate pre-built binary path.
+* `--uninstall`: Unregister the LaunchAgent and remove the installed binary.
+
+=== 3. Permissions
+
+Because `wspe` intercepts global keyboard events and automates UI actions in Mission Control, macOS requires granting Accessibility and Automation permissions:
+
+1. *Accessibility*:
+   * Open *System Settings* -> *Privacy & Security* -> *Accessibility*.
+   * Add and enable the installed binary (e.g. `~/.local/bin/wspe` or `target/release/wspe`).
+     _(Tip: In the file dialog, press `Cmd + Shift + .` to show hidden folders if navigating to `~/.local/bin`)_.
+2. *Automation*:
+   * Open *System Settings* -> *Privacy & Security* -> *Automation*.
+   * Ensure *System Events* is permitted for `wspe`. macOS will display an authorization prompt on your first space switch; approve this prompt.
+
 == Usage
 
 === Default Keybindings
