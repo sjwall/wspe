@@ -12,9 +12,9 @@ toc::[]
 
 == Installation
 
-=== 1. Build the Binary
+=== 1. Obtain the Binary
 
-Ensure the release binary is compiled before installing:
+You can download pre-built release archives from GitHub Releases, or compile locally:
 
 [source,bash]
 ----
