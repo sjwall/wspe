@@ -5,4 +5,7 @@ edition = "2024"
 
 [dependencies]
 global-hotkey = "0.8.0"
+resvg = "0.45"
+tray-icon = "0.24"
 winit = "0.30.13"
+
