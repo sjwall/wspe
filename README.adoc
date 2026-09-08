@@ -13,30 +13,42 @@ toc::[]
 
 == Installation
 
-=== 1. Obtain the Binary
+=== Quick Install (GitHub Releases)
 
-Download pre-built release archives from GitHub Releases, or compile locally:
+Install the latest release and register it as a macOS LaunchAgent with a single command:
 
 [source,bash]
 ----
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/sjwall/wspe/main/install.sh | sh
+----
+
+To install a specific release version:
+
+[source,bash]
+----
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/sjwall/wspe/main/install.sh | sh -s -- --release v0.1.0-RC1
+----
+
+=== Manual Local Installation
+
+You can also run `./install.sh` directly from a cloned repository or an unpacked release archive:
+
+[source,bash]
+----
+# Compile and install locally
 cargo build --release
-----
-
-=== 2. Install and Register for System Startup
-
-Run `./install.sh`, it copies the binary to `~/.local/bin/wspe` (or a custom directory specified via `--bin-dir`) and registers it as a macOS LaunchAgent (`uk.co.samuelwall.wspe`) so it automatically starts on system login:
-
-[source,bash]
-----
-./install.sh
+./install.sh --local
 ----
 
 Options supported by `install.sh`:
 
+* `-r, --release <TAG>`: Specify release version to install from GitHub (default: `latest`).
+* `-v, --version <TAG>`: Alias for `--release`.
 * `--bin-dir <DIR>`: Custom install directory (default: `$HOME/.local/bin`).
+* `--local`: Install local pre-built binary instead of downloading from GitHub.
 * `--in-place`: Run the binary directly from `target/release/wspe` without copying.
 * `--binary <PATH>`: Specify an alternate pre-built binary path.
-* `--uninstall`: Unregister the LaunchAgent and remove the installed binary.
+* `-u, --uninstall`: Unregister the LaunchAgent and remove the installed binary.
 
 === 3. Permissions
 
