@@ -26,16 +26,6 @@ struct KeyMap {
     hotkey: Option<HotKey>,
 }
 
-trait KeyMapCallback {
-    fn callback(&self);
-}
-
-impl KeyMapCallback for KeyMap {
-    fn callback(&self) {
-        println!("{self:?}");
-    }
-}
-
 fn load_icon() -> Icon {
     let svg_data = include_bytes!("../assets/icon-white.svg");
     let opt = resvg::usvg::Options::default();
@@ -141,7 +131,6 @@ fn main() {
     }));
 
     let mut app = App {
-        hotkeys_manager,
         hotkeys: digits,
         tray_icon: None,
         quit_id: None,
@@ -157,7 +146,6 @@ enum AppEvent {
 }
 
 struct App {
-    hotkeys_manager: GlobalHotKeyManager,
     hotkeys: [KeyMap; 10],
     tray_icon: Option<TrayIcon>,
     quit_id: Option<MenuId>,
