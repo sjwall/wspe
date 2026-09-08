@@ -6,7 +6,8 @@
 
 image::assets/icon.svg[wspe,128,128,align=center]
 
-`wspe` is a lightweight macOS workspace/spaces manager and global hotkey daemon written in Rust. It enables rapid, direct switching between macOS Desktop Spaces using `Cmd + <digit>` shortcuts without needing manual system shortcut configuration for each space.
+`wspe` is macOS workspace/spaces manager.
+It enables switching between macOS Desktop Spaces using `Cmd + <digit>`.
 
 toc::[]
 
@@ -14,7 +15,7 @@ toc::[]
 
 === 1. Obtain the Binary
 
-You can download pre-built release archives from GitHub Releases, or compile locally:
+Download pre-built release archives from GitHub Releases, or compile locally:
 
 [source,bash]
 ----
@@ -23,7 +24,7 @@ cargo build --release
 
 === 2. Install and Register for System Startup
 
-Run the provided install script. It copies the pre-built binary to `~/.local/bin/wspe` (or a custom directory specified via `--bin-dir`) and registers it as a macOS LaunchAgent (`uk.co.samuelwall.wspe`) so it automatically starts on system login:
+Run `./install.sh`, it copies the binary to `~/.local/bin/wspe` (or a custom directory specified via `--bin-dir`) and registers it as a macOS LaunchAgent (`uk.co.samuelwall.wspe`) so it automatically starts on system login:
 
 [source,bash]
 ----
@@ -39,36 +40,20 @@ Options supported by `install.sh`:
 
 === 3. Permissions
 
-Because `wspe` intercepts global keyboard events and automates UI actions in Mission Control, macOS requires granting Accessibility and Automation permissions:
+The Accessibility and Autiomation permissions are required to allow the app to intercept the global keyboard events and switch the workspace:
 
 1. *Accessibility*:
    * Open *System Settings* -> *Privacy & Security* -> *Accessibility*.
    * Add and enable the installed binary (e.g. `~/.local/bin/wspe` or `target/release/wspe`).
-     _(Tip: In the file dialog, press `Cmd + Shift + .` to show hidden folders if navigating to `~/.local/bin`)_.
 2. *Automation*:
    * Open *System Settings* -> *Privacy & Security* -> *Automation*.
    * Ensure *System Events* is permitted for `wspe`. macOS will display an authorization prompt on your first space switch; approve this prompt.
 
 == Usage
 
-=== Default Keybindings
-
-[cols="1,1,2", options="header"]
-|===
-| Shortcut | Target Space | Notes
-| `Cmd + 1` | Desktop 1 | Switches to Desktop Space 1
-| `Cmd + 2` | Desktop 2 | Switches to Desktop Space 2
-| `Cmd + 3` | Desktop 3 | Switches to Desktop Space 3
-| `Cmd + 4` | Desktop 4 | Switches to Desktop Space 4
-| `Cmd + 5` | Desktop 5 | Switches to Desktop Space 5
-| `Cmd + 6` | Desktop 6 | Switches to Desktop Space 6
-| `Cmd + 7` | Desktop 7 | Switches to Desktop Space 7
-| `Cmd + 8` | Desktop 8 | Switches to Desktop Space 8
-| `Cmd + 9` | Desktop 9 | Switches to Desktop Space 9
-| `Cmd + 0` | Desktop 10 | Maps digit `0` to Desktop Space 10
-|===
-
-NOTE: The action triggers upon the *release* (`HotKeyState::Released`) of the key combination.
+----
+Cmd + <0-9>
+----
 
 === Troubleshooting
 

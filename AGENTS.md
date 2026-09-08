@@ -4,4 +4,4 @@
 
 - `src/main.rs`: Application entry point, event loop, and global hotkey listeners.
 - `src/spaces.rs`: macOS Spaces integration and private API bindings.
-- `Cargo.toml`: Rust package dependencies and build configuration.
+- `assets/*`: Visual image assets
