@@ -36,7 +36,8 @@ You can also run `./install.sh` directly from a cloned repository or an unpacked
 [source,bash]
 ----
 # Compile and install locally
-cargo build --release
+cargo build --release --locked --target aarch64-apple-darwin
+cargo build --release --locked --target x86_64-apple-darwin
 ./install.sh --local
 ----
 
