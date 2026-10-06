@@ -36,8 +36,7 @@ fn load_icon() -> Icon {
     const WIDTH: u32 = 32;
     const HEIGHT: u32 = 32;
 
-    let mut pixmap =
-        resvg::tiny_skia::Pixmap::new(WIDTH, HEIGHT).expect("Failed to create pixmap");
+    let mut pixmap = resvg::tiny_skia::Pixmap::new(WIDTH, HEIGHT).expect("Failed to create pixmap");
 
     let size = tree.size();
     let transform = resvg::tiny_skia::Transform::from_scale(
@@ -49,7 +48,6 @@ fn load_icon() -> Icon {
 
     Icon::from_rgba(pixmap.take(), WIDTH, HEIGHT).expect("Failed to create tray icon")
 }
-
 
 fn main() {
     let hotkeys_manager = GlobalHotKeyManager::new().unwrap();

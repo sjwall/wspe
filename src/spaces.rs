@@ -6,11 +6,7 @@ use std::process::Command;
 /// This works by temporarily triggering Mission Control, programmatically clicking
 /// the requested desktop thumbnail, and letting Mission Control close.
 pub fn switch_space_no_shortcuts(space_number: u8) -> Result<(), String> {
-    let target_space = if space_number == 0 {
-        10
-    } else {
-        space_number
-    };
+    let target_space = if space_number == 0 { 10 } else { space_number };
 
     let script = format!(
         r#"
