@@ -1,3 +1,4 @@
+use crate::log::log_error;
 use std::process::Command;
 
 /// Switches the active macOS Space to the specified number without using keyboard shortcuts.
@@ -76,7 +77,8 @@ pub fn switch_space_no_shortcuts(space_number: u8) -> Result<(), String> {
     if output.status.success() {
         Ok(())
     } else {
-        let error = String::from_utf8_lossy(&output.stderr);
-        Err(format!("AppleScript execution failed: {}", error.trim()))
+        let error: String = String::from_utf8_lossy(&output.stderr).trim().to_string();
+        log_error("spaces", "AppleScript execution failed", error.as_str());
+        Err(error)
     }
 }

@@ -1,3 +1,4 @@
+use log::log_error;
 #[cfg(target_os = "macos")]
 use winit::platform::macos::{ActivationPolicy, EventLoopBuilderExtMacOS};
 
@@ -6,6 +7,7 @@ use tray_icon::{
     menu::{Menu, MenuEvent, MenuId, MenuItem, PredefinedMenuItem},
 };
 
+mod log;
 mod spaces;
 
 use global_hotkey::{
@@ -176,7 +178,10 @@ impl ApplicationHandler<AppEvent> for App {
 
             match tray {
                 Ok(t) => self.tray_icon = Some(t),
-                Err(e) => eprintln!("Failed to create tray icon: {e}"),
+                Err(e) => {
+                    let error: String = format!("{}", e);
+                    log_error("app", "Failed to create tray icon", &*error)
+                }
             }
         }
     }
@@ -200,8 +205,7 @@ impl ApplicationHandler<AppEvent> for App {
                             let workspace = val.digit;
                             let result = spaces::switch_space_no_shortcuts(workspace);
                             if result.is_err() {
-                                let err = result.err();
-                                println!("{err:?}");
+                                // TODO: handle keystroke error
                             }
                         }
                     }
